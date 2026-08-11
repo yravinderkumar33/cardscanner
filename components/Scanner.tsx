@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useScannerPipeline } from '../hooks/useScannerPipeline';
 import { CaptureScreen } from './CaptureScreen';
 import { ModelLoadingScreen } from './ModelLoadingScreen';
+import { ProcessingScreen } from './ProcessingScreen';
 
 export function Scanner({ onRetryModels }: { onRetryModels(): void }) {
   const pipeline = useScannerPipeline();
@@ -18,6 +19,16 @@ export function Scanner({ onRetryModels }: { onRetryModels(): void }) {
       );
     case 'capture':
       return <CaptureScreen onImage={(uri) => pipeline.scanCard(uri)} banner={pipeline.scanError} />;
+    case 'processing':
+      return <ProcessingScreen stage={pipeline.stage} streamText={pipeline.streamText} onCancel={pipeline.cancel} />;
+    case 'review':
+      // Temporary debug view — replaced by ReviewScreen in Task 13.
+      return (
+        <View style={styles.placeholder}>
+          <Text>{JSON.stringify(pipeline.fields, null, 2)}</Text>
+          <Text>degraded: {String(pipeline.degraded)}</Text>
+        </View>
+      );
     default:
       // Placeholder — replaced by real screens in Tasks 12–13.
       return (
