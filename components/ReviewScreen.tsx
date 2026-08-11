@@ -21,7 +21,7 @@ export function ReviewScreen({
   fields: ContactFields;
   rawText: string;
   degraded: boolean;
-  onSave(edited: ContactFields): void;
+  onSave(edited: ContactFields): Promise<void>;
   onRescan(): void;
 }) {
   const [firstName, setFirstName] = useState(fields.firstName ?? '');
@@ -32,20 +32,28 @@ export function ReviewScreen({
   const [emails, setEmails] = useState(fields.emails.join(', '));
   const [website, setWebsite] = useState(fields.website ?? '');
   const [address, setAddress] = useState(fields.address ?? '');
+  const [saving, setSaving] = useState(false);
 
   const splitList = (v: string) => v.split(',').map((s) => s.trim()).filter((s) => s !== '');
 
-  const save = () =>
-    onSave({
-      firstName: firstName.trim() || undefined,
-      lastName: lastName.trim() || undefined,
-      company: company.trim() || undefined,
-      jobTitle: jobTitle.trim() || undefined,
-      phones: splitList(phones),
-      emails: splitList(emails),
-      website: website.trim() || undefined,
-      address: address.trim() || undefined,
-    });
+  const save = async () => {
+    if (saving) return;
+    setSaving(true);
+    try {
+      await onSave({
+        firstName: firstName.trim() || undefined,
+        lastName: lastName.trim() || undefined,
+        company: company.trim() || undefined,
+        jobTitle: jobTitle.trim() || undefined,
+        phones: splitList(phones),
+        emails: splitList(emails),
+        website: website.trim() || undefined,
+        address: address.trim() || undefined,
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -64,8 +72,8 @@ export function ReviewScreen({
       <Field label="Website" value={website} onChange={setWebsite} />
       <Field label="Address" value={address} onChange={setAddress} />
       <View style={styles.buttons}>
-        <Button title="Add to Contacts" onPress={save} />
-        <Button title="Rescan" onPress={onRescan} />
+        <Button title="Add to Contacts" onPress={save} disabled={saving} />
+        <Button title="Rescan" onPress={onRescan} disabled={saving} />
       </View>
       {rawText !== '' && (
         <View style={styles.rawBlock}>
