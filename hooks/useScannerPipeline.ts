@@ -28,10 +28,10 @@ export function useScannerPipeline() {
   }, [phase, ocr.isReady, llm.isReady]);
 
   const scanCard = async (imageUri: string) => {
-    const myId = ++scanIdRef.current;
-    const isStale = () => scanIdRef.current !== myId;
     if (inFlightRef.current) return;
     inFlightRef.current = true;
+    const myId = ++scanIdRef.current;
+    const isStale = () => scanIdRef.current !== myId;
     setScanError(null);
     setDegraded(false);
     setStage('ocr');
