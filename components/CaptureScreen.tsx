@@ -15,14 +15,24 @@ export function CaptureScreen({ onImage, banner }: { onImage(uri: string): void;
     try {
       const photo = await cameraRef.current.takePictureAsync({ quality: 0.9 });
       if (photo?.uri) onImage(photo.uri);
+    } catch (e) {
+      console.warn('capture failed', e);
     } finally {
       setBusy(false);
     }
   };
 
   const pickFromGallery = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 1 });
-    if (!result.canceled && result.assets[0]?.uri) onImage(result.assets[0].uri);
+    if (busy) return;
+    setBusy(true);
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 1 });
+      if (!result.canceled && result.assets[0]?.uri) onImage(result.assets[0].uri);
+    } catch (e) {
+      console.warn('capture failed', e);
+    } finally {
+      setBusy(false);
+    }
   };
 
   if (!permission) return <View style={styles.container} />;
@@ -44,7 +54,7 @@ export function CaptureScreen({ onImage, banner }: { onImage(uri: string): void;
         </View>
       )}
       <View style={styles.controls}>
-        <Button title="Gallery" onPress={pickFromGallery} />
+        <Button title="Gallery" onPress={pickFromGallery} disabled={busy} />
         <TouchableOpacity
           style={[styles.shutter, (!permission.granted || !cameraReady || busy) && styles.shutterDisabled]}
           onPress={takePhoto}
