@@ -767,6 +767,12 @@ git add lib/ && git commit -m "feat: system/user/retry prompt builders (TDD)"
 
 ---
 
+> **Amendment (2026-08-11, Task 10 review):** `ExtractionDeps` gains an optional
+> `isCancelled?: () => boolean`, checked right after `ocrForward` resolves and at the
+> top of each LLM attempt; when true, `extractContact` returns a new result variant
+> `{ status: 'cancelled' }` without calling the LLM again. Existing behavior is
+> unchanged when `isCancelled` is absent. The committed code + tests are authoritative.
+
 ### Task 8: Extraction orchestrator with injected deps (TDD)
 
 **Files:**
@@ -1025,6 +1031,15 @@ git add lib/ && git commit -m "feat: pure ContactFields to expo-contacts mapping
 ```
 
 ---
+
+> **Amendment (2026-08-11, Task 10 review):** the boolean `cancelledRef` cancel design
+> has a race (stale cancelled-scan results can overwrite a newer scan's state; a
+> post-interrupt partial response can trigger a phantom background retry — interrupt()
+> RESOLVES generate() with partial text, it does not reject). Replaced by a per-scan
+> token: `scanIdRef` counter captured at `scanCard` start; every post-await state
+> change guards on token currency; `cancel()` bumps the token (+ interrupt if
+> generating); `extractContact` receives `isCancelled: () => scanIdRef.current !== myId`
+> (see Task 8 amendment). The committed code is authoritative.
 
 ### Task 10: Scanner pipeline hook + model loading screen + app shell
 
