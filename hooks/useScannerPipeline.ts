@@ -19,6 +19,7 @@ export function useScannerPipeline() {
   const [degraded, setDegraded] = useState(false);
   const [scanError, setScanError] = useState<string | null>(null);
   const scanIdRef = useRef(0);
+  const inFlightRef = useRef(false);
 
   useEffect(() => {
     if (phase === 'loading-models' && ocr.isReady && llm.isReady) {
@@ -29,6 +30,8 @@ export function useScannerPipeline() {
   const scanCard = async (imageUri: string) => {
     const myId = ++scanIdRef.current;
     const isStale = () => scanIdRef.current !== myId;
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
     setScanError(null);
     setDegraded(false);
     setStage('ocr');
@@ -62,6 +65,8 @@ export function useScannerPipeline() {
       if (isStale()) return;
       setScanError(`Scan failed: ${(e as Error).message}`);
       setPhase('capture');
+    } finally {
+      inFlightRef.current = false;
     }
   };
 

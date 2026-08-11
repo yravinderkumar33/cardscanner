@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { ContactFields } from '../lib/schema';
 
 function Field({ label, value, onChange }: { label: string; value: string; onChange(v: string): void }) {
@@ -50,6 +50,9 @@ export function ReviewScreen({
         website: website.trim() || undefined,
         address: address.trim() || undefined,
       });
+    } catch (e) {
+      console.warn('save failed', e);
+      Alert.alert('Could not open the contact form. Please try again.');
     } finally {
       setSaving(false);
     }

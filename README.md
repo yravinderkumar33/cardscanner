@@ -16,6 +16,9 @@ one-time ~0.5 GB model download. No cloud APIs.
 
 First launch downloads models (~45 MB OCR + ~470 MB LLM) — use Wi-Fi.
 
+The iPhone must be running iOS 17 or newer (deployment target forced by
+react-native-executorch's podspec).
+
 ## Test
     npm test          # pure extraction logic (Jest, runs on the Mac)
     npx tsc --noEmit
