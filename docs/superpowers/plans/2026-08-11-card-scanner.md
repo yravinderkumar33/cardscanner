@@ -213,17 +213,36 @@ module.exports = function withFmtConstevalPatch(config) {
 };
 ```
 
-In `app.json`, append `"./plugins/withFmtConstevalPatch"` to the `"plugins"` array. Then verify the plugin fires and the patch lands:
+In `app.json`, append `"./plugins/withFmtConstevalPatch"` to the `"plugins"` array.
+
+Also set the iOS deployment target to 17.0 — react-native-executorch 0.9.3's podspec
+requires `:ios => '17.0'` and the generated Podfile otherwise defaults to 15.1,
+failing pod install (discovered during execution; the user's iPhone must run iOS 17+):
+
+```bash
+npx expo install expo-build-properties
+```
+
+and add to the app.json `"plugins"` array:
+
+```json
+["expo-build-properties", { "ios": { "deploymentTarget": "17.0" } }]
+```
+
+Then verify the plugin fires and the patch lands:
 
 ```bash
 npx expo prebuild -p ios --clean
 grep -n 'FMT_USE_CONSTEVAL' ios/Podfile
+grep -n 'deploymentTarget' ios/Podfile.properties.json
 ```
 
-Expected: grep finds the patch inside the Podfile's `post_install` block. Commit:
+Expected: pod install succeeds; grep finds the patch inside the Podfile's `post_install`
+block; deploymentTarget is 17.0. (Note: prebuild also rewrites package.json's
+`ios`/`android` scripts to `expo run:*` — commit that too.) Commit:
 
 ```bash
-git add plugins/ app.json && git commit -m "fix: Podfile patch for Xcode 26.4 fmt consteval break (config plugin)"
+git add plugins/ app.json package.json package-lock.json && git commit -m "fix: Podfile patch for Xcode 26.4 fmt consteval break (config plugin)"
 ```
 
 - [ ] **Step 1: MANUAL — build and run on the user's iPhone**
