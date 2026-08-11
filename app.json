@@ -31,7 +31,8 @@
     "plugins": [
       "expo-asset",
       ["expo-camera", { "cameraPermission": "CardScanner uses the camera to photograph business cards." }],
-      ["expo-contacts", { "contactsPermission": "CardScanner saves scanned business cards to your contacts." }]
+      ["expo-contacts", { "contactsPermission": "CardScanner saves scanned business cards to your contacts." }],
+      "./plugins/withFmtConstevalPatch"
     ]
   }
 }
