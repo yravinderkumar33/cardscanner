@@ -82,12 +82,15 @@ components/ReviewScreen.tsx
 
 ### ContactFields schema (lib/schema.ts)
 
-All fields optional; arrays default to empty:
+All fields **nullable and optional** (the prompt tells the model to use `null` for
+absent fields, so the schema must accept null — otherwise valid outputs would fail
+validation). A normalize step after validation maps `null` → `undefined` and missing
+arrays → `[]` so UI code only deals with one absence shape:
 
 ```
-firstName, lastName, company, jobTitle: string?
-phones: string[]        emails: string[]
-website, address: string?
+firstName, lastName, company, jobTitle: string | null?
+phones: string[] | null?        emails: string[] | null?
+website, address: string | null?
 ```
 
 ### OCR post-processing (lib/ocrToText.ts)
