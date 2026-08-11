@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { useScannerPipeline } from '../hooks/useScannerPipeline';
+import { CaptureScreen } from './CaptureScreen';
 import { ModelLoadingScreen } from './ModelLoadingScreen';
 
 export function Scanner({ onRetryModels }: { onRetryModels(): void }) {
@@ -15,8 +16,10 @@ export function Scanner({ onRetryModels }: { onRetryModels(): void }) {
           onRetry={onRetryModels}
         />
       );
+    case 'capture':
+      return <CaptureScreen onImage={(uri) => pipeline.scanCard(uri)} banner={pipeline.scanError} />;
     default:
-      // Placeholder — replaced by real screens in Tasks 11–13.
+      // Placeholder — replaced by real screens in Tasks 12–13.
       return (
         <View style={styles.placeholder}>
           <Text>phase: {pipeline.phase}</Text>
