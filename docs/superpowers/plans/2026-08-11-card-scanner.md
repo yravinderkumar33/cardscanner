@@ -1504,6 +1504,13 @@ git add -A && git commit -m "feat: processing screen and end-to-end OCR-to-LLM e
 
 ---
 
+> **Amendment (2026-08-11, Task 13 review):** ReviewScreen must serialize its save:
+> internal `saving` state, `save()` guards at entry and wraps `await onSave(...)` in
+> try/finally, both buttons `disabled={saving}`, and the `onSave` prop is typed
+> `Promise<void>` (Scanner's handler is already async). Prevents double-tap from
+> stacking two native `presentFormAsync` modals. This restores the spec §5 `saving`
+> affordance the plan's code block dropped. The committed code is authoritative.
+
 ### Task 13: Review screen + save to contacts + done screen
 
 **Files:**
