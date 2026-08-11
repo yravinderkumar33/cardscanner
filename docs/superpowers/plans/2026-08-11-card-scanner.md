@@ -21,6 +21,7 @@
 - Files in `lib/` must import ONLY from `zod`, `jsonrepair`, or other `lib/` files — never from `react-native`, `expo-*`, or `react-native-executorch` (keeps Jest config trivial; ts-jest cannot parse RN imports). NOTE: this is a deliberate deviation from the spec's mention of the library's `getStructuredOutputPrompt`/`fixAndValidateStructuredOutput` helpers — we implement the same behavior with `jsonrepair` + `zod` directly so it is unit-testable.
 - Package manager: npm. Test runner: `npm test` (Jest via ts-jest, tests in `lib/__tests__/`).
 - Steps marked **MANUAL** need the user's physical iPhone plugged in — pause and ask the user to run/observe those.
+- **Xcode 26.4 ruling (user-approved 2026-08-11):** this Mac has Xcode 26.4 (Clang 21), which breaks RN builds via fmt consteval errors (react-native-executorch#1081). Approved workaround instead of downgrading: an Expo config plugin (`plugins/withFmtConstevalPatch.js`, added in Task 3) injects `FMT_USE_CONSTEVAL=0` + C++17 into the `fmt`/`RCT-Folly` pods inside the generated Podfile's `post_install` hook. Do NOT stop on the Xcode version check; if the Task 3 device build still fails after the patch, THEN stop and escalate (fallback: user downgrades Xcode).
 
 ---
 
@@ -42,7 +43,7 @@ xcodebuild -version     # expect Xcode <= 26.3 — Xcode 26.4/Clang 21 breaks RN
 npm view expo-template-blank-typescript dist-tags --json
 ```
 
-Expected: dist-tags JSON contains an `"sdk-55"` key. If Xcode is 26.4+, STOP and tell the user (build will fail; they must use Xcode ≤ 26.3). If `sdk-55` tag is missing, STOP and report (fall back to `sdk-54` only with user approval).
+Expected: dist-tags JSON contains an `"sdk-55"` key. Xcode 26.4 is present and APPROVED per the Global Constraints ruling (Podfile patch lands in Task 3) — do not stop on it. If `sdk-55` tag is missing, STOP and report (fall back to `sdk-54` only with user approval).
 
 - [ ] **Step 2: Scaffold via temp dir (repo root is not empty — it has docs/ and .git/)**
 
@@ -161,11 +162,69 @@ git add -A && git commit -m "feat: add pinned executorch deps, init call, iOS pe
 
 ### Task 3: MANUAL — iOS device smoke test
 
-**Files:** none created (native `ios/` dir is generated, gitignored)
+**Files:**
+- Create: `plugins/withFmtConstevalPatch.js` (Xcode 26.4 workaround — see Global Constraints ruling)
+- Modify: `app.json` (register the plugin)
 
 **Interfaces:**
 - Consumes: Tasks 1–2
-- Produces: confirmed working native build chain (Xcode, pods, New Arch, ExecuTorch init) on the user's iPhone
+- Produces: confirmed working native build chain (Xcode 26.4 + patched pods, New Arch, ExecuTorch init) on the user's iPhone
+
+- [ ] **Step 0: Add the fmt-consteval Podfile patch plugin**
+
+Create `plugins/withFmtConstevalPatch.js`:
+
+```js
+const { withDangerousMod } = require('expo/config-plugins');
+const fs = require('fs');
+const path = require('path');
+
+// Xcode 26.4 / Apple Clang 21 breaks fmt's consteval formatting in RN pods
+// (react-native-executorch#1081, facebook/react-native#55601). Same workaround
+// the library's own example app uses, injected into the generated Podfile's
+// post_install hook so it survives `expo prebuild --clean`.
+const PATCH = `    # Xcode 26.4 fmt-consteval workaround (react-native-executorch#1081)
+    installer.pods_project.targets.each do |target|
+      if target.name == 'fmt' || target.name == 'RCT-Folly'
+        target.build_configurations.each do |config|
+          config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+          config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'FMT_USE_CONSTEVAL=0'
+        end
+      end
+    end
+`;
+
+module.exports = function withFmtConstevalPatch(config) {
+  return withDangerousMod(config, [
+    'ios',
+    (cfg) => {
+      const podfilePath = path.join(cfg.modRequest.platformProjectRoot, 'Podfile');
+      let contents = fs.readFileSync(podfilePath, 'utf8');
+      if (!contents.includes('FMT_USE_CONSTEVAL')) {
+        // Insert inside the existing post_install block (a second post_install
+        // block would be a CocoaPods error).
+        contents = contents.replace(/post_install do \|installer\|\n/, (m) => m + PATCH);
+        fs.writeFileSync(podfilePath, contents);
+      }
+      return cfg;
+    },
+  ]);
+};
+```
+
+In `app.json`, append `"./plugins/withFmtConstevalPatch"` to the `"plugins"` array. Then verify the plugin fires and the patch lands:
+
+```bash
+npx expo prebuild -p ios --clean
+grep -n 'FMT_USE_CONSTEVAL' ios/Podfile
+```
+
+Expected: grep finds the patch inside the Podfile's `post_install` block. Commit:
+
+```bash
+git add plugins/ app.json && git commit -m "fix: Podfile patch for Xcode 26.4 fmt consteval break (config plugin)"
+```
 
 - [ ] **Step 1: MANUAL — build and run on the user's iPhone**
 
@@ -1656,7 +1715,8 @@ First launch downloads models (~45 MB OCR + ~470 MB LLM) — use Wi-Fi.
 - Design spec: docs/superpowers/specs/2026-08-11-card-scanner-design.md
 - Implementation plan: docs/superpowers/plans/2026-08-11-card-scanner.md
 - Known constraint: release builds cannot target the iOS simulator (ExecuTorch).
-- Xcode 26.4 / Apple Clang 21 breaks RN builds (upstream issue) — use ≤ 26.3.
+- Xcode 26.4 / Apple Clang 21 breaks stock RN builds (upstream issue); this repo
+  carries the workaround in `plugins/withFmtConstevalPatch.js` (FMT_USE_CONSTEVAL=0).
 ```
 
 - [ ] **Step 4: Commit**
