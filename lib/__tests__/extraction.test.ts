@@ -68,4 +68,26 @@ describe('extractContact', () => {
     };
     expect((await extractContact(deps, 'x')).status).toBe('unparsed');
   });
+
+  it('returns cancelled after OCR when isCancelled, without calling llm', async () => {
+    const deps: ExtractionDeps = {
+      ocrForward: async () => CARD,
+      llmGenerate: async () => { throw new Error('must not be called'); },
+      isCancelled: () => true,
+    };
+    const result = await extractContact(deps, 'x');
+    expect(result.status).toBe('cancelled');
+  });
+
+  it('stops before retry when cancelled mid-scan', async () => {
+    let callCount = 0;
+    const deps: ExtractionDeps = {
+      ocrForward: async () => CARD,
+      llmGenerate: async () => { callCount += 1; return 'garbage'; },
+      isCancelled: () => callCount >= 1,
+    };
+    const result = await extractContact(deps, 'x');
+    expect(callCount).toBe(1);
+    expect(result.status).toBe('cancelled');
+  });
 });

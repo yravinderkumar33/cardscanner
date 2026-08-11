@@ -18,7 +18,7 @@ export function useScannerPipeline() {
   const [rawText, setRawText] = useState('');
   const [degraded, setDegraded] = useState(false);
   const [scanError, setScanError] = useState<string | null>(null);
-  const cancelledRef = useRef(false);
+  const scanIdRef = useRef(0);
 
   useEffect(() => {
     if (phase === 'loading-models' && ocr.isReady && llm.isReady) {
@@ -27,7 +27,8 @@ export function useScannerPipeline() {
   }, [phase, ocr.isReady, llm.isReady]);
 
   const scanCard = async (imageUri: string) => {
-    cancelledRef.current = false;
+    const myId = ++scanIdRef.current;
+    const isStale = () => scanIdRef.current !== myId;
     setScanError(null);
     setDegraded(false);
     setStage('ocr');
@@ -37,15 +38,18 @@ export function useScannerPipeline() {
         {
           ocrForward: async (uri) => {
             const detections = await ocr.forward(uri);
-            if (!cancelledRef.current) setStage('llm');
+            if (!isStale()) setStage('llm');
             return detections;
           },
           llmGenerate: (messages: Msg[]) => llm.generate(messages),
+          isCancelled: isStale,
         },
         imageUri
       );
-      if (cancelledRef.current) return; // cancel() already set the phase
-      if (result.status === 'no-text') {
+      if (isStale()) return; // cancel() already set the phase
+      if (result.status === 'cancelled') {
+        return; // cancel() already set the phase
+      } else if (result.status === 'no-text') {
         setScanError("Couldn't read the card. Try a sharper, closer photo.");
         setPhase('capture');
       } else {
@@ -55,14 +59,14 @@ export function useScannerPipeline() {
         setPhase('review');
       }
     } catch (e) {
-      if (cancelledRef.current) return;
+      if (isStale()) return;
       setScanError(`Scan failed: ${(e as Error).message}`);
       setPhase('capture');
     }
   };
 
   const cancel = () => {
-    cancelledRef.current = true;
+    scanIdRef.current += 1;
     if (llm.isGenerating) llm.interrupt(); // in-flight generate() settles after this
     setPhase('capture');
   };
