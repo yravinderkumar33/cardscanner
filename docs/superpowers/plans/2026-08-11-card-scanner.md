@@ -1300,6 +1300,13 @@ git add -A && git commit -m "feat: scanner pipeline hook, model loading screen, 
 
 ---
 
+> **Amendment (2026-08-11, Task 11 review):** `pickFromGallery` must respect and set
+> the same `busy` flag as the shutter (guard at entry, set in try/finally) and the
+> Gallery button gets `disabled={busy}` — otherwise a late-resolving picker can fire a
+> second `scanCard` from a stale closure after the phase has moved on. Both handlers
+> also wrap their awaits in try/catch (swallow with console.warn) so a native failure
+> can't become an unhandled rejection. The committed code is authoritative.
+
 ### Task 11: Capture screen (camera + gallery)
 
 **Files:**
