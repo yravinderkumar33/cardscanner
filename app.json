@@ -11,8 +11,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.ravinderkumar.cardscanner",
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-asset",
+      ["expo-camera", { "cameraPermission": "CardScanner uses the camera to photograph business cards." }],
+      ["expo-contacts", { "contactsPermission": "CardScanner saves scanned business cards to your contacts." }]
+    ]
   }
 }
