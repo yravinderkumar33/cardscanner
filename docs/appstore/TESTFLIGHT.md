@@ -175,3 +175,44 @@ Common first-upload stoppers, all already handled here — verify rather than as
 - Missing 1024×1024 icon, or an icon with alpha → the icon is 1024×1024 with no alpha.
 - Bundle version already used → `autoIncrement` prevents it.
 - Missing purpose strings → camera and photo library are set; Contacts is not requested.
+
+---
+
+## Over-the-air updates (EAS Update)
+
+The app now bundles `expo-updates`, so **JavaScript-only** fixes can ship without a new
+build or an App Store review.
+
+**The limit, stated plainly:** OTA only reaches builds that already contain the updates
+runtime. Every build made before this was added — including anything already on a device —
+**cannot** receive an update. Those need a fresh build. The same is true of any change that
+touches native code, a native dependency, `app.json` native config, or the app icon.
+
+Runtime versioning uses the **fingerprint** policy: EAS hashes the native project and only
+serves a JS bundle to a binary whose native side matches. This app links ExecuTorch and
+several native modules, so the looser `appVersion` policy would happily push a bundle onto a
+mismatched binary and crash it. Fingerprint makes that impossible — the cost is that adding
+or removing any native dependency starts a new runtime, and older builds stop receiving
+updates, which is the correct outcome.
+
+Channels are wired in `eas.json`: `production`, `preview`, `development`.
+
+### Shipping a JS fix
+
+```bash
+npx eas update --branch production --message "Fix the flashlight toggle"
+```
+
+Devices pick it up on the next cold start. To check what a build would receive:
+
+```bash
+npx eas update:list --branch production
+```
+
+### What can and cannot go OTA
+
+| Change | OTA? |
+|---|---|
+| Screen logic, copy, styling, prompts, validation — anything in `components/`, `lib/`, `hooks/`, `theme/` | Yes |
+| Adding or removing a native module, editing `app.json` native config, app icon, permission strings | No — new build |
+| Bumping the app version for the store | No — new build |

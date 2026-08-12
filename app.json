@@ -33,6 +33,10 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO",
         "android.permission.READ_CONTACTS",
+        "android.permission.WRITE_CONTACTS",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_CONTACTS",
         "android.permission.WRITE_CONTACTS"
       ]
     },
@@ -76,6 +80,12 @@
         "projectId": "9be9e192-a820-4cd5-9afc-a0232629df8c"
       }
     },
-    "owner": "yravinderkumar33"
+    "owner": "yravinderkumar33",
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/9be9e192-a820-4cd5-9afc-a0232629df8c"
+    }
   }
 }

@@ -26,6 +26,7 @@
     "expo-network": "~55.0.16",
     "expo-sharing": "~55.0.22",
     "expo-status-bar": "~55.0.6",
+    "expo-updates": "~55.0.26",
     "jsonrepair": "^3.15.0",
     "phosphor-react-native": "^3.0.6",
     "react": "19.2.0",

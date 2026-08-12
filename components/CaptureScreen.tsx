@@ -275,7 +275,11 @@ export function CaptureScreen({
             style={StyleSheet.absoluteFill}
             active={!covered}
             facing="back"
-            flash={flashOn ? 'on' : 'off'}
+            // Torch, not `flash`: `flash` only fires for the instant of capture,
+            // so the toggle looked dead and could not light the card while you
+            // frame it. The torch stays on through the shot, which also avoids
+            // the specular glare a flash throws off a glossy card.
+            enableTorch={flashOn && !covered}
             onCameraReady={() => setCameraReady(true)}
           />
 
@@ -396,7 +400,9 @@ export function CaptureScreen({
       <View style={styles.topBar}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Toggle flash"
+          accessibilityLabel={flashOn ? 'Turn the flashlight off' : 'Turn the flashlight on'}
+          accessibilityState={{ selected: flashOn }}
+          disabled={!granted}
           onPress={() => {
             Haptics.selectionAsync();
             setFlashOn((f) => !f);
