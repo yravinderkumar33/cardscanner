@@ -12,46 +12,12 @@ loads nothing from any other server, so it works anywhere that can serve a file 
 
 ---
 
-## 1. Fill in the two placeholders first
+## 1. Placeholders — already filled
 
-Both pages ship with exactly two placeholder tokens, highlighted in a dashed amber box so you
-cannot miss them in a browser:
-
-| Token | Appears in | Replace with |
-|-------|-----------|--------------|
-| `CONTACT_EMAIL_PLACEHOLDER` | `index.html`, `privacy.html` | the email address you will actually monitor, e.g. `support@yourdomain.com` |
-| `EFFECTIVE_DATE_PLACEHOLDER` | `privacy.html` | the date the policy goes live, e.g. `12 August 2026` |
-
-Find and replace across both files:
-
-```sh
-cd docs/appstore/site
-grep -n "PLACEHOLDER" index.html privacy.html   # see every occurrence first
-
-# macOS / BSD sed
-sed -i '' 's/CONTACT_EMAIL_PLACEHOLDER/support@example.com/g' index.html privacy.html
-sed -i '' 's/EFFECTIVE_DATE_PLACEHOLDER/12 August 2026/g'      privacy.html
-
-grep -n "PLACEHOLDER" index.html privacy.html   # must print nothing
-```
-
-(Grep the two HTML files by name, not the whole folder — this README mentions the token
-names itself, so a recursive search will always match.)
-
-Then remove the highlight markup so the replaced values read as normal text: delete the
-`<mark class="todo">` and `</mark>` tags wrapping each value (three occurrences in total — one
-date and two email addresses). Leaving them in is not fatal, but the amber dashed box makes a
-finished page look unfinished to a reviewer.
-
-Optional: once the email is real, you can turn the address on the support page into a link —
-`<a href="mailto:you@example.com">you@example.com</a>`.
-
-**Do not** invent a company name, postal address or phone number for these pages. Everything on
-them is written for an individual developer, and every factual claim matches
-`docs/appstore/privacy-policy.md` exactly. If you change a fact on one page, change it in the
-policy source and in the in-app Privacy screen too.
-
----
+Both pages ship with the real values in place: contact `yravinderkumar33@gmail.com` and
+effective date `12 August 2026`. There are no `PLACEHOLDER` tokens left. If you change the
+contact address later, update `index.html`, `privacy.html` and `../privacy-policy.md`
+together so the three stay consistent, then redeploy (section 3).
 
 ## 2. Publish on GitHub Pages
 

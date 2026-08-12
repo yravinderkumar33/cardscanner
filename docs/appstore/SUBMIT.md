@@ -36,11 +36,9 @@ and the rejection-risk register.
 1. **YOU — Pick the app name.** `CardScanner` alone is very likely taken. `listing.md §1`
    ranks five options; the recommendation is `CardScanner: Card to Contact`. Search the
    App Store for the exact string before committing — the name is hard to change later.
-2. **YOU — Fill the two placeholders, then redeploy.** The pages are already live on
-   GitHub Pages (see below), but both still show `CONTACT_EMAIL_PLACEHOLDER` and
-   `EFFECTIVE_DATE_PLACEHOLDER` in an amber box. Apple's reviewer opens these pages.
-   Edit `docs/appstore/site/*.html` (and `privacy-policy.md` to match), then push the
-   two files to the `gh-pages` branch again.
+2. ~~Fill the placeholders~~ — **done.** The live pages carry the real contact address
+   (`yravinderkumar33@gmail.com`) and effective date (12 August 2026). Both URLs return
+   200 and are safe to paste into App Store Connect.
 4. **YOU — Apple authentication.** Everything below needs either your Apple ID with 2FA
    or an App Store Connect API key. Nothing in this repo holds Apple credentials, and
    nothing should.

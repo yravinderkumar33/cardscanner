@@ -1,6 +1,6 @@
 # CardScanner Privacy Policy
 
-**Effective date: EFFECTIVE_DATE_PLACEHOLDER**
+**Effective date: 12 August 2026**
 
 CardScanner is made by Ravinder Kumar, an individual developer. This policy explains what the app does with your information. It is written to be read, not to be survived.
 
@@ -121,7 +121,7 @@ If this policy changes, the updated version will be published at this URL with a
 
 Questions about this policy or about how the app handles data:
 
-**CONTACT_EMAIL_PLACEHOLDER**
+**yravinderkumar33@gmail.com**
 
 Developer: Ravinder Kumar (individual)
 App: CardScanner, version 1.0.0
