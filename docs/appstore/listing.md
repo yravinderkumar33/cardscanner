@@ -9,42 +9,25 @@ Localization: English (U.S.), primary.
 
 ## 1. App Name — 30 characters max
 
-`CardScanner` on its own is almost certainly taken. Every option below is the brand plus a
-qualifier, which keeps the brand while making the full name unique. If the exact string is
-rejected as too similar to an existing app, move down the list. Option 5 drops the
-`CardScanner` token entirely and is the fallback if the brand word itself is contested.
+There is **one** product name in this project: **CardScanner**. It is what the codebase, the
+repo, the bundle identifier and the Home Screen label all use, and it is the name to use in
+prose everywhere.
 
-| # | Name | Chars | Notes |
-|---|------|-------|-------|
-| 1 | **CardScanner: Card to Contact** | 28 | **Recommended.** Says the whole job in four words. Indexes `card` and `contact`, the two highest-intent words a user types. |
-| 2 | CardScanner: Offline Card AI | 28 | Leads with the differentiator instead of the job. Good if the subtitle ends up carrying the job description. |
-| 3 | CardScanner — On-Device AI | 26 | Em dash reads cleanly on the product page but is harder to type in search. Indexes `on-device`, a low-volume term. |
-| 4 | CardScanner: Business Cards | 27 | Safest, most literal. Indexes `business`, which frees a slot in the keyword field. |
-| 5 | Card to Contact: Offline AI | 27 | Brand-free fallback. Use only if `CardScanner` cannot be used at all. |
+Apple needs a globally unique string for the store listing, and bare `CardScanner` is already
+taken (Zoho ships a "Card Scanner", and `eas submit` was rejected on it). So the App Store
+listing — and only the App Store listing — carries a qualifier:
 
-## ✅ CHOSEN: `CardScanner: Card to Contact` (28 characters)
-
-This is the name to enter in App Store Connect. The alternatives above are kept only as
-fallbacks in case Apple rejects it as too similar to an existing app.
-
-**This is the App Store listing name, not the home-screen name.** They are separate fields
-and they differ here on purpose:
-
-| Field | Value | Where it shows |
+| Where | Exact string | Why |
 |---|---|---|
-| App Store Connect → App Name | `CardScanner: Card to Contact` | Search results, the product page |
-| `app.json` → `expo.name` → `CFBundleDisplayName` | `CardScanner` | Under the icon on the Home Screen |
+| Everything in the codebase, and this documentation | `CardScanner` | The product name |
+| `app.json` → `expo.name` → `CFBundleDisplayName` | `CardScanner` | Home Screen label; iOS truncates near 12 characters, and this is 11 |
+| App Store Connect → App Information → **Name** | `CardScanner: Card to Contact` | 28 of 30 characters. The only place the qualifier appears |
 
-Leave `app.json` alone. iOS truncates Home Screen labels at roughly 12 characters, so
-`CardScanner` (11) fits exactly and `CardScanner: Card to Con…` would not. Apple permits
-the listing name to be longer than the bundle display name, and expects it: the extra words
-are what get indexed for search.
+That is the whole story. Do not introduce further variants.
 
-The keyword field below assumes this name and subtitle option A, because Apple already
-indexes every word in both — repeating them in keywords wastes the 100 characters.
-Verified: the keyword string contains no standalone `card` or `contact` token.
-
----
+If Apple rejects `CardScanner: Card to Contact` as too similar to an existing app, the fix is
+to change that one field — nothing in the codebase moves. A public App Store search finds no
+app using that exact string.
 
 ## 2. Subtitle — 30 characters max
 
@@ -54,7 +37,9 @@ Verified: the keyword string contains no standalone `card` or `contact` token.
 | B | On-device AI. Works offline. | 28 | Same idea, more technical. Drops `account`, which is a word real users search for. |
 | C | Photo in, contact out. Offline | 30 | Describes the flow, but repeats `contact` from the name and wastes indexing. |
 
-**Recommended: `Offline AI, no account needed` (29 characters).**
+## ✅ USE: `Offline AI, no account needed` (29 characters)
+
+Options B and C above are recorded only in case Apple objects to this one. Enter option A.
 
 Words now claimed by name + subtitle, which must therefore not be repeated in Keywords:
 `card`, `scanner`, `cardscanner`, `to`, `contact`, `offline`, `ai`, `no`, `account`, `needed`.

@@ -40,7 +40,7 @@ unless provided.
 `appName ?? exp.name ?? prompt`, and `app.json` sets `expo.name` to `CardScanner`, so that
 is what it tries — not the listing name chosen in `listing.md`. `CardScanner` is already
 taken on the App Store (Zoho ships a "Card Scanner"), so EAS generated a unique record name
-like `CardScanner (83c4d7)` and carried on.
+with a random suffix and carried on.
 
 **That is harmless, and expected.** The App Store Connect record name is not the app name
 users see, not the bundle ID, and not the Home Screen label. It only has to be unique so the
@@ -54,8 +54,8 @@ CardScanner: Card to Contact
 ```
 
 A public App Store search finds no app using that exact string, so it should be accepted.
-If Apple rejects it as too similar to something existing, `listing.md §1` has four ranked
-fallbacks.
+If Apple rejects it as too similar to something existing, change that one field — nothing in
+the codebase depends on it.
 
 Do **not** "fix" this by changing `expo.name` in `app.json` — that is `CFBundleDisplayName`,
 the label under the icon on the Home Screen, which iOS truncates near 12 characters.
