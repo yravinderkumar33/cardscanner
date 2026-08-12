@@ -25,15 +25,29 @@ Read this with `SUBMIT.md`; that file covers the store listing, this one covers 
 Everything below prompts for your Apple ID with 2FA, or an App Store Connect API key.
 No Apple credentials are stored in this repo and none should be.
 
-### 1. Register the bundle ID and create the app record
+### 1. The bundle ID and app record — `eas submit` creates both
 
-`com.ravinderkumar.cardscanner` must exist under team `Z7UCX6HB7G`. EAS offers to create it
-on the first build; otherwise do it at appstoreconnect.apple.com → Apps → **+**:
+You do **not** need to pre-create anything in App Store Connect. Verified in the eas-cli
+source (`build/submit/ios/AppProduce.js`): on submit it registers the bundle identifier on
+the Apple Developer portal, creates the App Store Connect app record, and creates an
+internal TestFlight group (that last step is non-fatal if it fails).
 
-- Name: `CardScanner: Card to Contact`
-- Primary language: English (U.S.)
-- Bundle ID: `com.ravinderkumar.cardscanner`
-- SKU: `cardscanner-001`
+It runs because our submit profile deliberately omits `ascAppId` — the eas.json reference
+says setting it "results in skipping the app creation step". `sku` is likewise generated
+unless provided.
+
+You will be prompted for the **app name** during submit. Enter:
+
+```
+CardScanner: Card to Contact
+```
+
+If that name is already taken, creation fails at the prompt — `listing.md §1` has four
+ranked fallbacks.
+
+Prefer to do it by hand anyway? appstoreconnect.apple.com → Apps → **+**, with bundle ID
+`com.ravinderkumar.cardscanner`, language English (U.S.), SKU `cardscanner-001`. Then put
+the resulting app ID in `eas.json` as `ascAppId` to skip the automatic step.
 
 ### 2. Build
 
@@ -53,6 +67,11 @@ npx eas submit --platform ios --profile production --latest
 Then wait for the "processing" state in App Store Connect to clear — usually 5–15 minutes.
 
 ### 4. Beta metadata — paste these
+
+Note: creating the app record does **not** create the store listing. Description, keywords,
+screenshots, category, age rating and App Privacy still have to be entered in the web UI
+before you can submit for App Store review — none of that is needed for TestFlight
+*internal* testing.
 
 **Feedback email:** `yravinderkumar33@gmail.com`
 

@@ -15,7 +15,7 @@
     "ios": {
       "bundleIdentifier": "com.ravinderkumar.cardscanner",
       "supportsTablet": false,
-      "buildNumber": "1",
+      "buildNumber": "2",
       "requireFullScreen": false,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
