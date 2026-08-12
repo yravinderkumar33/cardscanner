@@ -28,7 +28,13 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_CONTACTS",
+        "android.permission.WRITE_CONTACTS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -64,6 +70,12 @@
       ],
       "expo-font",
       "expo-sharing"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "9be9e192-a820-4cd5-9afc-a0232629df8c"
+      }
+    },
+    "owner": "yravinderkumar33"
   }
 }
