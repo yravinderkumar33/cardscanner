@@ -36,14 +36,34 @@ It runs because our submit profile deliberately omits `ascAppId` — the eas.jso
 says setting it "results in skipping the app creation step". `sku` is likewise generated
 unless provided.
 
-You will be prompted for the **app name** during submit. Enter:
+**It does not prompt for the app name.** The resolution order in eas-cli is
+`appName ?? exp.name ?? prompt`, and `app.json` sets `expo.name` to `CardScanner`, so that
+is what it tries — not the listing name chosen in `listing.md`. `CardScanner` is already
+taken on the App Store (Zoho ships a "Card Scanner"), so EAS generated a unique record name
+like `CardScanner (83c4d7)` and carried on.
+
+**That is harmless, and expected.** The App Store Connect record name is not the app name
+users see, not the bundle ID, and not the Home Screen label. It only has to be unique so the
+record can exist. Nothing about the build is affected.
+
+**Rename it before submitting for App Store review** (not needed for TestFlight):
+App Store Connect → your app → **App Information** → **Name** →
 
 ```
 CardScanner: Card to Contact
 ```
 
-If that name is already taken, creation fails at the prompt — `listing.md §1` has four
-ranked fallbacks.
+A public App Store search finds no app using that exact string, so it should be accepted.
+If Apple rejects it as too similar to something existing, `listing.md §1` has four ranked
+fallbacks.
+
+Do **not** "fix" this by changing `expo.name` in `app.json` — that is `CFBundleDisplayName`,
+the label under the icon on the Home Screen, which iOS truncates near 12 characters.
+`CardScanner` is correct there.
+
+Once the record exists, copy its **Apple ID** (a 10-digit number, App Information → General
+Information) into `eas.json` as `submit.production.ios.ascAppId`. That makes every later
+submit target the existing record directly and skip app creation entirely.
 
 Prefer to do it by hand anyway? appstoreconnect.apple.com → Apps → **+**, with bundle ID
 `com.ravinderkumar.cardscanner`, language English (U.S.), SKU `cardscanner-001`. Then put
