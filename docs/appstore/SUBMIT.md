@@ -27,7 +27,7 @@ and the rejection-risk register.
 | Public repo | https://github.com/yravinderkumar33/cardscanner |
 | App Privacy questionnaire answers | `app-privacy-answers.md` |
 | Notes for Review + risk register | `review-notes.md` |
-| Screenshots (6.9") | `docs/appstore/screenshots/` |
+| Screenshots (6.9") | **Done** — six captioned frames at 1320×2868 in `docs/appstore/screenshots/` |
 
 ---
 
