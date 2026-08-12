@@ -22,8 +22,9 @@ and the rejection-risk register.
 | Release build compiles for device | Verified — `xcodebuild archive` succeeded |
 | EAS build + submit profiles | `eas.json`, team `Z7UCX6HB7G` |
 | Listing copy (name, subtitle, description, keywords, category, age rating, What's New) | `listing.md` |
-| Privacy policy | `privacy-policy.md` + hostable page in `site/` |
-| Support page | `site/index.html` |
+| Privacy policy | `privacy-policy.md` + **live** at https://yravinderkumar33.github.io/cardscanner/privacy.html |
+| Support page | **live** at https://yravinderkumar33.github.io/cardscanner/ |
+| Public repo | https://github.com/yravinderkumar33/cardscanner |
 | App Privacy questionnaire answers | `app-privacy-answers.md` |
 | Notes for Review + risk register | `review-notes.md` |
 | Screenshots (6.9") | `docs/appstore/screenshots/` |
@@ -35,12 +36,11 @@ and the rejection-risk register.
 1. **YOU — Pick the app name.** `CardScanner` alone is very likely taken. `listing.md §1`
    ranks five options; the recommendation is `CardScanner: Card to Contact`. Search the
    App Store for the exact string before committing — the name is hard to change later.
-2. **YOU — Host the two pages.** `site/README.md` has the GitHub Pages steps. App Store
-   Connect will not accept the submission without a reachable Privacy Policy URL, and
-   App Review opens the Support URL.
-3. **YOU — Fill the two placeholders** in `privacy-policy.md` and `site/privacy.html`:
-   `CONTACT_EMAIL_PLACEHOLDER` (must be an address you actually read) and
-   `EFFECTIVE_DATE_PLACEHOLDER`.
+2. **YOU — Fill the two placeholders, then redeploy.** The pages are already live on
+   GitHub Pages (see below), but both still show `CONTACT_EMAIL_PLACEHOLDER` and
+   `EFFECTIVE_DATE_PLACEHOLDER` in an amber box. Apple's reviewer opens these pages.
+   Edit `docs/appstore/site/*.html` (and `privacy-policy.md` to match), then push the
+   two files to the `gh-pages` branch again.
 4. **YOU — Apple authentication.** Everything below needs either your Apple ID with 2FA
    or an App Store Connect API key. Nothing in this repo holds Apple credentials, and
    nothing should.
@@ -99,7 +99,10 @@ npx eas submit --platform ios --profile production --latest
 ### 5. Fill the listing — **YOU**
 
 Paste from `listing.md`: name, subtitle, promotional text, description, keywords,
-support/marketing URLs, category, age rating, copyright, "What's New".
+category, age rating, copyright, "What's New". The two URL fields are:
+
+- **Support URL** — `https://yravinderkumar33.github.io/cardscanner/`
+- **Privacy Policy URL** — `https://yravinderkumar33.github.io/cardscanner/privacy.html`
 Upload `docs/appstore/screenshots/` to the 6.9" iPhone slot.
 Answer **App Privacy** using `app-privacy-answers.md` — that file is the single authority;
 where any other document disagrees, it wins.
