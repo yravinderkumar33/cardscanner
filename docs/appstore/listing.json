@@ -1,0 +1,32 @@
+{
+  "bundleId": "com.ravinderkumar.cardscanner",
+  "primaryLocale": "en-US",
+  "appInfo": {
+    "name": "CardScanner: Card to Contact",
+    "subtitle": "Offline AI, no account needed",
+    "privacyPolicyUrl": "https://yravinderkumar33.github.io/cardscanner/privacy.html"
+  },
+  "version": {
+    "versionString": "1.0.0",
+    "copyright": "2026 Ravinder Kumar",
+    "description": "CardScanner turns a paper business card into an iOS contact. No account, no sign-up, no server. The AI runs on your iPhone, so there is nothing to log into and nowhere for your cards to go. The two AI models are downloaded once on first launch; after that, no connection is needed.\n\nHOW IT WORKS\n\n1. Photograph the card, or import a photo you already have.\n2. The app reads the text on the card, then a small language model on the phone sorts that text into name, job title, company, phone, email, website and address. You watch it happen: the recognized text first, then the fields as the model writes them.\n3. Check the result, fix anything that looks wrong, and save. iOS opens its own New Contact form with the fields already filled in, and you confirm it.\n\nRUNS ON THE PHONE\n\nBoth AI models live on your device. The reader that finds text in the photo is about 37 MB. The language model that structures it is about 493 MB. A typical scan takes around three seconds.\n\nOnce the models are on the phone, turn on airplane mode and scan a card. It still works.\n\nWHERE YOUR DATA STAYS\n\nThe photo is processed inside the app and saved only to your local History.\n\nScans stay in the app's own storage on this iPhone: the card photo, a thumbnail, the extracted fields and the raw recognized text. Nothing syncs anywhere.\n\nNo account. No sign-up. No ads. No analytics about your scans.\n\nThe app never reads your address book, and never asks for permission to. It only hands a filled-in form to iOS, which you confirm. iOS does not tell the app whether you tapped Done or Cancel, so the app does not claim to know.\n\nONE DOWNLOAD, THEN OFFLINE\n\nThe two models are downloaded once on first launch, about 530 MB together. Wi-Fi is recommended. The download can be paused and resumed, and the models can be deleted or downloaded again later in Settings. After that first download, the app works with no connection at all.\n\nAn honest note: the open-source AI library this app is built on counts that model download. It sends the app's bundle id, the platform, the library version, the model name and a country code derived from your device language settings. It contains nothing about you or your cards. The Privacy screen inside the app says the same thing.\n\nREVIEW AND EDIT\n\nEvery field the AI filled in is marked, so you can see what was read off the card and what was inferred. Emails, phone numbers and websites are checked for obvious mistakes. If a card is unusual and the model cannot structure it, the app hands you the recognized lines and lets you assign them to fields yourself instead of failing.\n\nHISTORY\n\nEvery scan is kept on the device. Search it, open a scan to see the photo and the fields, save it to Contacts again, share it as a .vcf file, or swipe to delete it.\n\nAPPEARANCE AND ACCESSIBILITY\n\nLight, dark and system appearance. VoiceOver labels throughout, with spoken updates while the AI works. Large touch targets, and layouts that hold up at bigger text sizes.\n\nRequires iPhone with iOS 17.0 or later. Portrait only.",
+    "keywords": "business,vcard,ocr,namecard,visiting,networking,conference,email,phone,address,private,local,llm,crm",
+    "promotionalText": "Snap a business card, check the fields, save it to Contacts. The AI reads the card on your iPhone. One model download on first launch, then it works in airplane mode.",
+    "supportUrl": "https://yravinderkumar33.github.io/cardscanner/",
+    "marketingUrl": null,
+    "whatsNew": "First release.\n\nPhotograph a business card and get an iOS contact. Text recognition and the language model that sorts the text into fields both run on your iPhone, so after the one-time model download the app works with no connection.\n\nReview and edit every field before saving. Keep a searchable local History, re-save any scan, or share it as a .vcf file.\n\nRequires iOS 17.0 or later."
+  },
+  "categories": {
+    "primary": "BUSINESS",
+    "secondary": "PRODUCTIVITY"
+  },
+  "limits": {
+    "name": 30,
+    "subtitle": 30,
+    "promotionalText": 170,
+    "description": 4000,
+    "keywords": 100,
+    "whatsNew": 4000
+  },
+  "_note": "Machine-readable copy of the final values in listing.md. Kept as the single source of truth so the strings cannot drift. Entered into App Store Connect by hand — there is no script."
+}
