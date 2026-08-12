@@ -39,3 +39,25 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# env
+.env
+.env.*
+
+# on-device model weights — never commit (~530 MB)
+*.pte
+*.ptd
+*.gguf
+*.bin
+
+# build / signing artifacts
+DerivedData/
+coverage/
+*.ipa
+*.xcarchive
+*.dSYM
+*.cer
+*.certSigningRequest
+
+# agent scratch
+.superpowers/

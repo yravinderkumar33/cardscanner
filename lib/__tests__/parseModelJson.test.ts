@@ -36,4 +36,24 @@ describe('parseModelJson', () => {
   it('throws on schema-violating JSON', () => {
     expect(() => parseModelJson('{"phones": "12345"}')).toThrow();
   });
+
+  it('throws on an object carrying none of the expected fields', () => {
+    // Every field is optional, so these validate — but they extract nothing,
+    // and must fail so extraction retries and then degrades.
+    expect(() => parseModelJson('{}')).toThrow(/no recognized contact fields/);
+    expect(() => parseModelJson('{"contact":{"firstName":"Priya","phones":["+1 (415) 555-0198"]}}')).toThrow(
+      /no recognized contact fields/
+    );
+    expect(() => parseModelJson('{"name":"Priya Raghunathan","phone":"+1 (415) 555-0198"}')).toThrow(
+      /no recognized contact fields/
+    );
+    expect(() => parseModelJson('{"firstName":null,"phones":[],"emails":null}')).toThrow(
+      /no recognized contact fields/
+    );
+  });
+
+  it('accepts a reply with one recognized field among unknown keys', () => {
+    const f = parseModelJson('{"firstName":"Jane","fax":"123"}');
+    expect(f.firstName).toBe('Jane');
+  });
 });

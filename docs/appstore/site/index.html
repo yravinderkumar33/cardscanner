@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CardScanner Support — help, FAQ and contact</title>
+<meta name="description" content="Support for CardScanner, the on-device iPhone app that turns a paper business card into a contact. FAQ on the first-launch model download, offline use, storage, deleting scans, and contacting the developer.">
+<meta name="color-scheme" content="dark light">
+<style>
+  /* ── Nocturne palette. Dark is the ground; light is a full override. ───── */
+  :root {
+    --bg:        #161826;
+    --surface:   #232532;
+    --text:      #e9e9ed;
+    --muted:     #9ba0b4;
+    --accent:    #9184d9;
+    --accent-hi: #d2cefd;
+    --ring:      rgba(233, 233, 237, 0.14);
+    --tint:      rgba(145, 132, 217, 0.12);
+    --todo-bg:   rgba(223, 169, 107, 0.18);
+    --todo-fg:   #f0c48f;
+    --todo-line: #dfa96b;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg:        #e4e7f5;
+      --surface:   #f3f5fe;
+      --text:      #292b31;
+      --muted:     #565b6d;
+      --accent:    #796cbf;
+      --accent-hi: #5d5294;
+      --ring:      rgba(41, 43, 49, 0.12);
+      --tint:      rgba(121, 108, 191, 0.10);
+      --todo-bg:   rgba(138, 93, 44, 0.14);
+      --todo-fg:   #6b4620;
+      --todo-line: #8a5d2c;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+                 "Helvetica Neue", sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 0 22px 72px;
+  }
+
+  /* ── Masthead ──────────────────────────────────────────────────────────── */
+  .masthead {
+    border-bottom: 1px solid var(--ring);
+    margin-bottom: 40px;
+  }
+  .masthead .wrap { padding-top: 26px; padding-bottom: 22px; }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-hi);
+    margin: 0;
+  }
+  .wordmark .glyph {
+    width: 22px;
+    height: 15px;
+    border: 1.5px solid var(--accent);
+    border-radius: 4px;
+    background: var(--tint);
+  }
+
+  h1 {
+    font-size: 2.05rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin: 18px 0 0;
+  }
+
+  .lede {
+    color: var(--muted);
+    margin: 14px 0 0;
+  }
+
+  .quicklinks {
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    font-size: 0.95rem;
+  }
+
+  /* ── Typography ────────────────────────────────────────────────────────── */
+  h2 {
+    font-size: 1.4rem;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+    margin: 48px 0 6px;
+    padding-top: 4px;
+  }
+  h3 {
+    font-size: 1.06rem;
+    line-height: 1.4;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  p { margin: 0 0 14px; }
+  p:last-child { margin-bottom: 0; }
+
+  .section-note {
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+
+  a {
+    color: var(--accent-hi);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  strong { font-weight: 600; }
+
+  ul { padding-left: 1.25em; margin: 0 0 14px; }
+  li { margin-bottom: 7px; }
+  li:last-child { margin-bottom: 0; }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.88em;
+    background: var(--tint);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+
+  /* ── Cards ─────────────────────────────────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--ring);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin: 0 0 14px;
+  }
+  .card p { color: var(--muted); }
+  .card p strong { color: var(--text); }
+
+  .contact-card { border-color: var(--accent); background: var(--tint); }
+
+  .contact-address {
+    font-size: 1.12rem;
+    font-weight: 600;
+    margin: 4px 0 14px;
+    word-break: break-word;
+  }
+
+  mark.todo {
+    background: var(--todo-bg);
+    color: var(--todo-fg);
+    border: 1px dashed var(--todo-line);
+    border-radius: 5px;
+    padding: 1px 6px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+  }
+
+  /* ── Footer ────────────────────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--ring);
+    margin-top: 56px;
+    padding-top: 24px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer p { margin: 0 0 8px; }
+
+  @media (max-width: 480px) {
+    body { font-size: 16px; }
+    h1 { font-size: 1.7rem; }
+    .card { padding: 17px 18px; }
+    .wrap { padding: 0 18px 56px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="wordmark"><span class="glyph" aria-hidden="true"></span>CardScanner</p>
+    <h1>CardScanner Support</h1>
+    <p class="lede">Help, answers and a way to reach the person who makes the app.</p>
+    <ul class="quicklinks">
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="privacy.html">Privacy policy</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section aria-labelledby="what">
+    <h2 id="what">What CardScanner does</h2>
+    <p>
+      CardScanner turns a paper business card into an iPhone contact. You photograph the card, or
+      import a photo of one, and the app reads the text on it and sorts that text into fields —
+      name, job title, company, phone, email, website and address. You review those fields and fix
+      anything that looks wrong, then Apple's own New Contact form opens pre-filled so you can save
+      the contact. Both the text recognition and the small language model that structures the text
+      run on your iPhone, using two AI models the app downloads once on first launch; after that
+      download, scanning needs no network connection at all. Every scan is also kept in a local
+      History on the device, which only you can see.
+    </p>
+  </section>
+
+  <section aria-labelledby="faq">
+    <h2 id="faq">Frequently asked questions</h2>
+    <p class="section-note">The questions people actually ask, answered plainly.</p>
+
+    <div class="card">
+      <h3>Why does the first launch download about 530&nbsp;MB?</h3>
+      <p>
+        Because the reading happens on your phone rather than on a server, the AI has to be on the
+        phone. Those two model files are not included in the App Store download: on first launch the
+        app fetches them once from Hugging Face, a public model host — about 37&nbsp;MB for the text
+        reader and about 493&nbsp;MB for the language model. Wi-Fi is recommended. It happens once.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Can that download be paused and resumed?</h3>
+      <p>
+        Yes, and mostly it handles itself. If your connection drops, the download stops and starts
+        again on its own when you are back online; there is also a <strong>Resume download</strong>
+        button on the setup screen. If the phone is low on free space, it pauses and picks up again
+        once you have freed some and returned to the app. A model file that already finished is kept
+        and is never fetched twice — only a model that was still part-way through has to start over.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Does it work offline?</h3>
+      <p>
+        Yes, once the models are on the device. Scanning, reading, structuring and saving all happen
+        locally, so airplane mode changes nothing — that is the honest test, and the app invites you
+        to try it. Fetching those model files is the only thing CardScanner ever uses the network
+        for.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Which languages of card text can it read?</h3>
+      <p>
+        The on-device reader recognizes English text. Cards printed in other scripts may come back
+        partly or entirely unrecognized. Whatever the reader misses, you can still type into the
+        fields yourself before saving.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Why doesn't the app ask for Contacts permission?</h3>
+      <p>
+        Because it does not need one, and never asks. To save a card, CardScanner hands your
+        reviewed fields to Apple's own New Contact form, pre-filled. That form belongs to iOS and is
+        shown to you, not to the app: iOS presents it without giving CardScanner any access to your
+        address book, and you are the one who taps Save. So the app cannot read, list, search or
+        modify the contacts you already have — iOS enforces that, rather than the app merely
+        promising it. The only permissions CardScanner ever asks for are the camera and the photo
+        library.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>It said "Handed to Contacts" — was the contact actually saved?</h3>
+      <p>
+        Only if you tapped <strong>Done</strong> in the New Contact form that iOS presented. iOS does
+        not tell the app whether you tapped Done or Cancel, so the app genuinely cannot know — which
+        is why the wording is "handed to" rather than "saved". If the contact is not in your Contacts
+        app, open the scan in History and tap <strong>Add to Contacts again</strong>; nothing was
+        lost.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>What if the AI reads a card wrong?</h3>
+      <p>
+        Fix it on the review screen before you save — every field is editable, and the ones the model
+        filled in are marked so you know what to double-check. If a card's layout defeats the model
+        completely, the app falls back to letting you assign the recognized text to fields yourself.
+        The raw text the reader found is kept with the scan in History, so nothing that was on the
+        card is thrown away.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Where are my scans stored?</h3>
+      <p>
+        In the app's own storage area on your iPhone. Each scan keeps the card photo, a thumbnail,
+        the extracted fields, the raw recognized text, and the date. That is your History. It is not
+        uploaded, not synced, and not sent to the developer — there is no server to send it to, and
+        no account to attach it to.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>How do I delete a scan, or everything?</h3>
+      <p>
+        Swipe a row in History and tap <strong>Delete</strong>, or open the scan and use
+        <strong>Delete scan</strong>. That removes its photo, thumbnail, fields and raw text from the
+        device immediately. To remove everything at once, delete the CardScanner app from your
+        iPhone — iOS removes the app together with all of its stored data, including the models.
+        Contacts you already saved live in your address book, not in CardScanner, so delete those in
+        the Contacts app.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>How do I free up space, or delete the models?</h3>
+      <p>
+        Open <strong>Settings</strong> in the app, tap <strong>AI models</strong>, and you will see
+        exactly what each model is taking up on this iPhone. Delete either one to reclaim the space;
+        you can download it again later from the same screen. Deleting a model does not touch your
+        History — your scans stay where they are.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Which iPhones and iOS versions are supported?</h3>
+      <p>
+        An iPhone running iOS 17.0 or later, in portrait. There is no iPad-specific version and no
+        Android version. You will also want roughly 530&nbsp;MB of free space for the models, plus
+        room for the scans you keep.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="contact">
+    <h2 id="contact">Contact</h2>
+    <p class="section-note">
+      CardScanner is made by one person, Ravinder Kumar. Email reaches him directly.
+    </p>
+    <div class="card contact-card">
+      <p class="contact-address"><mark class="todo">CONTACT_EMAIL_PLACEHOLDER</mark></p>
+      <p>
+        Write about anything: a card the app read badly, a crash, a question about how your data is
+        handled, or a feature you wish existed. Replies usually arrive within two to three business
+        days.
+      </p>
+      <p>
+        It helps to include your iPhone model, your iOS version, the app version, and — if it is
+        about a specific card — what you expected the fields to say. Please don't send a photo of a
+        card containing someone else's details unless you have their permission.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="privacy">
+    <h2 id="privacy">Privacy</h2>
+    <p>
+      Your card photos, the text read from them and the contact fields stay on your iPhone. There is
+      no account, no server run by the developer, and no advertising, tracking or analytics inside
+      the app. The one thing that does leave the device — a download counter run by the open-source
+      AI library the app is built on, which is told that a model was downloaded — is described in
+      full in the policy.
+    </p>
+    <p><a href="privacy.html">Read the CardScanner privacy policy →</a></p>
+  </section>
+
+  <footer>
+    <p>CardScanner 1.0.0 · <code>com.ravinderkumar.cardscanner</code></p>
+    <p>Made by Ravinder Kumar, an individual developer.</p>
+    <p><a href="privacy.html">Privacy policy</a></p>
+  </footer>
+
+</main>
+
+</body>
+</html>

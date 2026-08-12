@@ -2,5 +2,8 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true
-  }
+  },
+  // icons.js re-exports phosphor's raw .tsx source (for Metro); keep it out of
+  // the TS program — importers type against the sibling icons.d.ts instead.
+  "exclude": ["node_modules", "components/ui/icons.js"]
 }

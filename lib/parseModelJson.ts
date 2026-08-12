@@ -26,5 +26,23 @@ export function parseModelJson(text: string): ContactFields {
   if (!result.success) {
     throw new Error(`Model output does not match contact schema: ${result.error.message}`);
   }
-  return normalizeContactFields(result.data);
+  const fields = normalizeContactFields(result.data);
+  // Every field is optional, so any JSON object validates — a wrapper object or
+  // renamed keys would otherwise pass as a "successful" empty extraction. Treat
+  // that as a parse failure so extractContact retries and then degrades.
+  const hasAny =
+    fields.phones.length > 0 ||
+    fields.emails.length > 0 ||
+    fields.firstName != null ||
+    fields.lastName != null ||
+    fields.company != null ||
+    fields.jobTitle != null ||
+    fields.website != null ||
+    fields.address != null;
+  if (!hasAny) {
+    throw new Error(
+      'Model output had no recognized contact fields — expected top-level keys firstName, lastName, company, jobTitle, phones, emails, website, address'
+    );
+  }
+  return fields;
 }

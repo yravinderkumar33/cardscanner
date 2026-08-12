@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CardScanner Privacy Policy</title>
+<meta name="description" content="The CardScanner privacy policy: card photos, recognized text and contact fields stay on your iPhone. No account, no server, no advertising or tracking — and a full description of the one request that leaves the device when the AI models are downloaded.">
+<meta name="color-scheme" content="dark light">
+<style>
+  /* ── Nocturne palette. Dark is the ground; light is a full override. ───── */
+  :root {
+    --bg:        #161826;
+    --surface:   #232532;
+    --text:      #e9e9ed;
+    --muted:     #9ba0b4;
+    --accent:    #9184d9;
+    --accent-hi: #d2cefd;
+    --ring:      rgba(233, 233, 237, 0.14);
+    --tint:      rgba(145, 132, 217, 0.12);
+    --todo-bg:   rgba(223, 169, 107, 0.18);
+    --todo-fg:   #f0c48f;
+    --todo-line: #dfa96b;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg:        #e4e7f5;
+      --surface:   #f3f5fe;
+      --text:      #292b31;
+      --muted:     #565b6d;
+      --accent:    #796cbf;
+      --accent-hi: #5d5294;
+      --ring:      rgba(41, 43, 49, 0.12);
+      --tint:      rgba(121, 108, 191, 0.10);
+      --todo-bg:   rgba(138, 93, 44, 0.14);
+      --todo-fg:   #6b4620;
+      --todo-line: #8a5d2c;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+                 "Helvetica Neue", sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 0 22px 72px;
+  }
+
+  /* ── Masthead ──────────────────────────────────────────────────────────── */
+  .masthead {
+    border-bottom: 1px solid var(--ring);
+    margin-bottom: 40px;
+  }
+  .masthead .wrap { padding-top: 26px; padding-bottom: 22px; }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-hi);
+    margin: 0;
+  }
+  .wordmark .glyph {
+    width: 22px;
+    height: 15px;
+    border: 1.5px solid var(--accent);
+    border-radius: 4px;
+    background: var(--tint);
+  }
+
+  h1 {
+    font-size: 2.05rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin: 18px 0 0;
+  }
+
+  .effective {
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .quicklinks {
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    font-size: 0.95rem;
+  }
+
+  /* ── Typography ────────────────────────────────────────────────────────── */
+  h2 {
+    font-size: 1.32rem;
+    line-height: 1.32;
+    letter-spacing: -0.012em;
+    font-weight: 600;
+    margin: 44px 0 12px;
+  }
+  h2 .num {
+    color: var(--accent-hi);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+  }
+
+  p { margin: 0 0 14px; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: var(--accent-hi);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    word-break: break-word;
+  }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  strong { font-weight: 600; }
+
+  ul { padding-left: 1.25em; margin: 0 0 14px; }
+  li { margin-bottom: 7px; }
+  li:last-child { margin-bottom: 0; }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.88em;
+    background: var(--tint);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--ring);
+    margin: 36px 0;
+  }
+
+  /* ── Cards ─────────────────────────────────────────────────────────────── */
+  .summary {
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin: 28px 0 0;
+  }
+  .summary p:first-child { color: var(--text); }
+  .summary p { color: var(--muted); }
+  .summary strong { color: var(--text); }
+
+  .note {
+    background: var(--surface);
+    border: 1px solid var(--ring);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 32px 0 0;
+    color: var(--muted);
+    font-size: 0.94rem;
+  }
+  .note h2 { font-size: 1.06rem; margin: 0 0 10px; color: var(--text); }
+
+  mark.todo {
+    background: var(--todo-bg);
+    color: var(--todo-fg);
+    border: 1px dashed var(--todo-line);
+    border-radius: 5px;
+    padding: 1px 6px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+  }
+
+  .contact-address {
+    font-size: 1.12rem;
+    font-weight: 600;
+    margin: 4px 0 14px;
+    word-break: break-word;
+  }
+
+  .meta { color: var(--muted); }
+
+  /* ── Footer ────────────────────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--ring);
+    margin-top: 48px;
+    padding-top: 24px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer p { margin: 0 0 8px; }
+
+  @media (max-width: 480px) {
+    body { font-size: 16px; }
+    h1 { font-size: 1.7rem; }
+    .summary, .note { padding: 17px 18px; }
+    .wrap { padding: 0 18px 56px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="wordmark"><span class="glyph" aria-hidden="true"></span>CardScanner</p>
+    <h1>CardScanner Privacy Policy</h1>
+    <p class="effective">
+      Effective date: <mark class="todo">EFFECTIVE_DATE_PLACEHOLDER</mark>
+    </p>
+    <ul class="quicklinks">
+      <li><a href="index.html">Support &amp; FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p>
+    CardScanner is made by Ravinder Kumar, an individual developer. This policy explains what the
+    app does with your information. It is written to be read, not to be survived.
+  </p>
+
+  <div class="summary">
+    <p><strong>The short version</strong></p>
+    <p>
+      CardScanner has no account system and no server, and the developer receives nothing from the
+      app. Your card photos, the text read from them, and the contact fields stay on your iPhone.
+      The one exception to "nothing leaves the phone" is a download counter run by the open-source
+      AI library the app is built on, which is told that a model was downloaded. It is described in
+      full in Section 5.
+    </p>
+  </div>
+
+  <hr>
+
+  <h2><span class="num">1.</span>What CardScanner does</h2>
+  <p>
+    You photograph a paper business card, or import a photo of one. The app reads the text on the
+    card and turns it into contact fields you can review and edit, then hands those fields to
+    Apple's New Contact form so you can save the contact.
+  </p>
+  <p>
+    All of that reading and structuring happens on your iPhone, using two AI models stored inside
+    the app. Nothing is sent anywhere to be processed. After the one-time model download described
+    in Section 5, the app works with no network connection at all, including in airplane mode.
+  </p>
+
+  <h2><span class="num">2.</span>Information the app collects about you</h2>
+  <p>Nothing that identifies you, and nothing about your cards.</p>
+  <p>
+    There is no sign-up, no login, no account, no profile, and no user identifier. The developer has
+    no server and receives no data from the app. The developer cannot see your scans, your contacts,
+    or how you use the app, because there is no mechanism that would send that information anywhere.
+  </p>
+  <p>
+    One piece of information does leave the device, and it is not about you: when the app downloads
+    its AI models, the open-source library that manages the download tells its maintainer's counter
+    that a model was downloaded. The full contents of that message are listed in Section 5. Because
+    a third party receives it, it is declared on this app's App Store privacy label as "Usage Data —
+    Product Interaction", not linked to your identity and not used for tracking. Nothing else is
+    collected, by anyone.
+  </p>
+
+  <h2><span class="num">3.</span>Information stored on your device</h2>
+  <p>
+    When you complete a scan, CardScanner saves the following in the app's own storage area on your
+    iPhone:
+  </p>
+  <ul>
+    <li>the photo of the card</li>
+    <li>a small thumbnail of that photo</li>
+    <li>
+      the contact fields extracted from the card (such as name, job title, company, phone, email,
+      website, address)
+    </li>
+    <li>the raw text the on-device reader found on the card</li>
+    <li>the date and time of the scan</li>
+  </ul>
+  <p>
+    This is your local History. It is stored only in the app's Documents directory on the device. It
+    is not uploaded, not synced, not backed up to any service run by the developer, and not shared
+    with anyone. It is included in your own iPhone backups only to the extent that iOS backs up app
+    data under settings you control.
+  </p>
+  <p>
+    The app also stores your preferences, such as appearance (light, dark, or system) and whether you
+    have completed onboarding, plus the downloaded AI model files.
+  </p>
+
+  <h2><span class="num">4.</span>Permissions, and what each one is for</h2>
+  <p>
+    CardScanner asks for two permissions, and only at the moment a feature needs them. iOS asks you
+    first, and you can change your answer at any time in the iOS Settings app.
+  </p>
+  <ul>
+    <li>
+      <strong>Camera</strong> — used only to photograph a business card. The camera preview and the
+      captured photo stay on the device. If you decline, you can still use the app by importing an
+      existing photo instead.
+    </li>
+    <li>
+      <strong>Photo Library</strong> — used only to let you pick an existing photo of a card to scan.
+      The app reads only the photo you choose. It does not browse, index, or upload your library. If
+      you decline, you can still use the camera instead.
+    </li>
+  </ul>
+  <p>
+    Both are optional. Declining one removes the feature it powers; the rest of the app keeps
+    working.
+  </p>
+  <p>
+    <strong>Contacts access is not requested.</strong> CardScanner does not ask for permission to use
+    your contacts, and you will never see a contacts prompt from it. When you save a card, the app
+    hands the fields you reviewed to Apple's own New Contact form, pre-filled. That form belongs to
+    iOS and is presented to you, not to the app: iOS shows it without granting CardScanner any access
+    to your address book, and you are the one who taps Save. So the app cannot read, list, search, or
+    modify the contacts you already have — that is enforced by iOS, not merely promised here. iOS
+    does not tell the app whether you saved or cancelled, so the app cannot know either.
+  </p>
+
+  <h2><span class="num">5.</span>The only thing the app uses the network for</h2>
+  <p>
+    CardScanner needs its two AI models before it can scan: an on-device text reader (about 37 MB)
+    and a small on-device language model (about 493 MB). These files are not bundled in the app
+    download. On first launch, the app downloads them once from Hugging Face, a public model host.
+    Wi-Fi is recommended. After that download completes, the app does not need the network again.
+  </p>
+  <p>
+    The open-source library the app is built on,
+    <a href="https://github.com/software-mansion/react-native-executorch">react-native-executorch</a>,
+    maintains a download counter for its models. When those model files are fetched, the library
+    sends a request to a counter operated by its maintainer, Software Mansion, containing:
+  </p>
+  <ul>
+    <li>the app's bundle identifier (<code>com.ravinderkumar.cardscanner</code>)</li>
+    <li>the platform (iOS)</li>
+    <li>the version of the library</li>
+    <li>the name of the model being downloaded</li>
+    <li>a country code derived from your device's locale setting</li>
+    <li>a true/false flag for whether the app is running in a simulator</li>
+  </ul>
+  <p>
+    That is the complete list. It contains nothing about you, your cards, your photos, your contacts,
+    or anything you scan. It does not include a device identifier, an advertising identifier, an
+    account, a name, or an email address. It happens only when model files are fetched — first
+    launch, or if you delete the models in Settings and download them again. It never happens during
+    a scan.
+  </p>
+  <p>
+    This is stated here because it is true, and a privacy policy that omitted it would be wrong.
+    Apart from these model downloads, the app makes no network requests.
+  </p>
+
+  <h2><span class="num">6.</span>What is never transmitted</h2>
+  <p>
+    Card photos, thumbnails, extracted contact fields, raw recognized text, your saved contacts, your
+    History, and your settings never leave your iPhone. They are not sent to the developer, to
+    Hugging Face, to the model download counter, or to any other party.
+  </p>
+
+  <h2><span class="num">7.</span>No advertising, no tracking, no analytics about how you use the app</h2>
+  <p>
+    CardScanner contains no advertising SDKs, no crash-reporting SDKs, no attribution or tracking
+    SDKs, and no social media SDKs. Nothing measures which screens you open, how many cards you scan,
+    how long you spend in the app, or what a scan produced. It does not use the Advertising
+    Identifier, does not track you across apps or websites, and does not build a profile of you.
+  </p>
+  <p>
+    The single exception is the model-download counter described in Section 5. Its stated purpose is
+    analytics — counting how often the library's models are downloaded — so this policy will not
+    pretend the app has "no analytics of any kind". What it counts is a model download, not you.
+  </p>
+
+  <h2><span class="num">8.</span>No selling, no sharing</h2>
+  <p>
+    The developer does not sell, rent, trade, or share your information, because the developer never
+    receives it. There are no advertising partners, data brokers, or third-party recipients of any
+    kind.
+  </p>
+
+  <h2><span class="num">9.</span>Third parties involved</h2>
+  <p>Two, and both only in connection with the one-time model download:</p>
+  <ul>
+    <li>
+      <strong>Hugging Face</strong> hosts the AI model files that the app downloads once. Like any
+      website you connect to, it receives the network request needed to serve those files, which
+      necessarily includes your device's IP address. It receives no content from the app. Its own
+      privacy practices are published at
+      <a href="https://huggingface.co/privacy">https://huggingface.co/privacy</a>.
+    </li>
+    <li>
+      <strong>Software Mansion</strong>, the maintainer of the open-source AI library, receives the
+      download-counter message listed in Section 5, at an endpoint on its own domain. Like any
+      server, it sees the IP address the request arrives from. It receives no card, photo, contact or
+      usage information.
+    </li>
+  </ul>
+  <p>
+    There are no other recipients. Nothing is sent to the developer of this app, because the
+    developer runs no server.
+  </p>
+  <p>
+    Apple's Contacts framework is part of iOS and runs on your device; the New Contact form is
+    provided by iOS, not by a third-party service.
+  </p>
+
+  <h2><span class="num">10.</span>Deleting your data</h2>
+  <p>You are always in control, and deletion is immediate and local.</p>
+  <ul>
+    <li>
+      <strong>Delete one scan:</strong> open History, swipe the scan, and delete it. The photo,
+      thumbnail, extracted fields, and raw text for that scan are removed from the device.
+    </li>
+    <li>
+      <strong>Delete the AI models:</strong> open Settings, tap <strong>AI models</strong>, and delete
+      them to reclaim the space. You can download them again later from the same screen.
+    </li>
+    <li>
+      <strong>Delete everything:</strong> delete the CardScanner app from your iPhone. iOS removes the
+      app and all of its stored data, including all scans and models.
+    </li>
+  </ul>
+  <p>
+    Contacts you already saved through Apple's New Contact form live in your address book, not in
+    CardScanner. Delete those in the Contacts app if you no longer want them.
+  </p>
+  <p>
+    There is nothing for the developer to delete on your behalf, and no data deletion request to
+    file, because no copy of your data exists outside your device.
+  </p>
+
+  <h2><span class="num">11.</span>Children's privacy</h2>
+  <p>
+    CardScanner is a business tool intended for general audiences and is not directed at children. It
+    does not knowingly collect personal information from anyone, including children under 13 (or the
+    equivalent age in your country). Since the app collects no personal information at all and has no
+    account system, there is no children's data for the developer to hold, review, or delete.
+  </p>
+
+  <h2><span class="num">12.</span>Your rights</h2>
+  <p>
+    Privacy laws such as the GDPR and the CCPA give you rights over personal data a company holds
+    about you — access, correction, deletion, portability, and the right to opt out of sale. The
+    developer holds no personal data about you, so there is nothing to access, correct, export, or
+    delete on the developer's side, and nothing is ever sold. Your data lives on your device, where
+    you can view it in History, edit it before saving, and delete it at any time as described in
+    Section 10.
+  </p>
+
+  <h2><span class="num">13.</span>Security</h2>
+  <p>
+    Your scans are stored in the app's own container on your iPhone, protected by iOS app sandboxing
+    and the device encryption that applies when your iPhone is locked with a passcode, Face ID, or
+    Touch ID. Using a passcode and keeping iOS up to date is the most effective way to protect this
+    data. Because your scans are never transmitted and no copy of them is stored remotely, there is
+    no server holding your data that can be breached and no account that can be taken over.
+  </p>
+
+  <h2><span class="num">14.</span>Changes to this policy</h2>
+  <p>
+    If this policy changes, the updated version will be published at this URL with a new effective
+    date at the top. Material changes — for example, if the app ever began transmitting something it
+    does not transmit today — will also be described in the app's release notes for the version that
+    introduces the change. Continuing to use the app after an update is subject to the policy then
+    posted. Previous versions are superseded by the current one.
+  </p>
+
+  <h2 id="contact"><span class="num">15.</span>Contact</h2>
+  <p>Questions about this policy or about how the app handles data:</p>
+  <p class="contact-address"><mark class="todo">CONTACT_EMAIL_PLACEHOLDER</mark></p>
+  <p class="meta">
+    Developer: Ravinder Kumar (individual)<br>
+    App: CardScanner, version 1.0.0<br>
+    Bundle identifier: <code>com.ravinderkumar.cardscanner</code>
+  </p>
+
+  <div class="note">
+    <h2>About these web pages</h2>
+    <p>
+      This note is about the support and privacy pages you are reading, not about the app. They are
+      static HTML: they set no cookies, run no scripts, load no fonts or images from other servers,
+      and contain no analytics or tracking of any kind. As with any website, the host that serves
+      these pages receives the network request needed to deliver them, which includes your IP
+      address.
+    </p>
+  </div>
+
+  <footer>
+    <p><a href="index.html">← CardScanner support and FAQ</a></p>
+    <p>CardScanner 1.0.0 · made by Ravinder Kumar, an individual developer.</p>
+  </footer>
+
+</main>
+
+</body>
+</html>

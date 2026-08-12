@@ -48,7 +48,7 @@ Expected: dist-tags JSON contains an `"sdk-55"` key. Xcode 26.4 is present and A
 - [ ] **Step 2: Scaffold via temp dir (repo root is not empty — it has docs/ and .git/)**
 
 ```bash
-cd /Users/ravinderkumar/personal/pocs/executorch
+cd <repo-root>
 npx create-expo-app@latest scaffold-tmp --template blank-typescript@sdk-55 --no-install
 rsync -a --exclude='.git' scaffold-tmp/ .
 rm -rf scaffold-tmp
