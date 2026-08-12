@@ -22,10 +22,27 @@ rejected as too similar to an existing app, move down the list. Option 5 drops t
 | 4 | CardScanner: Business Cards | 27 | Safest, most literal. Indexes `business`, which frees a slot in the keyword field. |
 | 5 | Card to Contact: Offline AI | 27 | Brand-free fallback. Use only if `CardScanner` cannot be used at all. |
 
-**Recommended: `CardScanner: Card to Contact` (28 characters).**
+## ✅ CHOSEN: `CardScanner: Card to Contact` (28 characters)
 
-The rest of this document assumes name option 1 and subtitle option A, because the keyword
-field depends on which words those two fields already claim.
+This is the name to enter in App Store Connect. The alternatives above are kept only as
+fallbacks in case Apple rejects it as too similar to an existing app.
+
+**This is the App Store listing name, not the home-screen name.** They are separate fields
+and they differ here on purpose:
+
+| Field | Value | Where it shows |
+|---|---|---|
+| App Store Connect → App Name | `CardScanner: Card to Contact` | Search results, the product page |
+| `app.json` → `expo.name` → `CFBundleDisplayName` | `CardScanner` | Under the icon on the Home Screen |
+
+Leave `app.json` alone. iOS truncates Home Screen labels at roughly 12 characters, so
+`CardScanner` (11) fits exactly and `CardScanner: Card to Con…` would not. Apple permits
+the listing name to be longer than the bundle display name, and expects it: the extra words
+are what get indexed for search.
+
+The keyword field below assumes this name and subtitle option A, because Apple already
+indexes every word in both — repeating them in keywords wastes the 100 characters.
+Verified: the keyword string contains no standalone `card` or `contact` token.
 
 ---
 

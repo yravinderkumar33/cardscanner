@@ -33,9 +33,10 @@ and the rejection-risk register.
 
 ## Blockers only you can clear
 
-1. **YOU — Pick the app name.** `CardScanner` alone is very likely taken. `listing.md §1`
-   ranks five options; the recommendation is `CardScanner: Card to Contact`. Search the
-   App Store for the exact string before committing — the name is hard to change later.
+1. ~~Pick the app name~~ — **chosen: `CardScanner: Card to Contact`** (28 of 30 characters).
+   Enter that as the App Store Connect *App Name*. The Home Screen name stays `CardScanner`
+   via `app.json`; see `listing.md §1` for why the two differ. Worth one App Store search
+   for the exact string before you commit — the name is hard to change after release.
 2. ~~Fill the placeholders~~ — **done.** The live pages carry the real contact address
    (`yravinderkumar33@gmail.com`) and effective date (12 August 2026). Both URLs return
    200 and are safe to paste into App Store Connect.
@@ -56,7 +57,7 @@ Either let EAS create it during the first submit, or do it by hand at
 appstoreconnect.apple.com → Apps → **+** with:
 
 - Platform: iOS
-- Name: the name you chose in step 1 above
+- Name: `CardScanner: Card to Contact`
 - Primary language: English (U.S.)
 - Bundle ID: `com.ravinderkumar.cardscanner` (register it under the team first if it does
   not exist yet)
