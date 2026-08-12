@@ -47,11 +47,16 @@ users see, not the bundle ID, and not the Home Screen label. It only has to be u
 record can exist. Nothing about the build is affected.
 
 **Rename it before submitting for App Store review** (not needed for TestFlight):
-App Store Connect → your app → **App Information** → **Name** →
 
-```
-CardScanner: Card to Contact
-```
+1. appstoreconnect.apple.com → **My Apps** → the generated `CardScanner (…)` app
+2. Sidebar → **App Information** (under *General*)
+3. **Localizable Information** → **Name**, with the language set to **English (U.S.)**
+4. Enter `CardScanner: Card to Contact`
+5. **Save**. Apple checks uniqueness on save, so a clash surfaces immediately.
+
+Do this while the app has no approved version — the Name is freely editable until then. Once
+the app is live, changing it requires submitting a new version. Uploading TestFlight builds
+in the meantime does not lock it.
 
 A public App Store search finds no app using that exact string, so it should be accepted.
 If Apple rejects it as too similar to something existing, change that one field — nothing in
